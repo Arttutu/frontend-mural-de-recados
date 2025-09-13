@@ -3,8 +3,6 @@
 import { useEffect, useState, ReactNode } from 'react';
 import { useLocale } from '../hook/useLocale';
 
-
-
 interface LanguageWrapperProps {
   children: ReactNode;
 }
@@ -25,5 +23,9 @@ export default function LanguageWrapper({ children }: LanguageWrapperProps) {
     setLang(locale);
   }, [locale]);
 
-  return <html lang={lang}  suppressHydrationWarning>{children}</html>;
+  return (
+    <html lang={lang} suppressHydrationWarning>
+      {children}
+    </html>
+  );
 }

@@ -39,14 +39,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         cz-shortcut-listen="true"
       >
         <Providers themeProps={{ attribute: 'class', defaultTheme: 'dark' }}>
-            <div className="w-full  flex flex-col h-screen">
-              <Navbar />
-              <main className=" container w-full mx-auto">{children}</main>
-              <footer className="w-full flex items-center justify-center py-3" />
-            </div>
+          <div className="w-full  flex flex-col h-screen">
+            <Navbar />
+            <main className=" container w-full mx-auto">{children}</main>
+            <footer className="w-full flex items-center justify-center py-3" />
+          </div>
         </Providers>
       </body>
-    
     </LanguageWrapper>
   );
 }
