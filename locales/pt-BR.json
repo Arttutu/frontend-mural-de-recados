@@ -1,0 +1,19 @@
+{
+    "mensagemMain" :"Deixe uma mensagem positiva para alegrar e inspirar o dia de alguém",
+    "titleSiteOne":"Mural de",
+    "titleSiteTwo": "recado",
+    "subtitle":"Recados da comunidade",
+    "buttonModal": "Criar recado",
+    "nomePlaceholder":"Digite o seu nome",
+    "mensagemPlaceholder": "Digite a sua mensagem",
+    "linkPlaceholder":"Link da sua imagem aqui",
+    "buttonPublicar": "Publicar recado",
+    "labelNome":"Seu nome",
+    "labelMensagem": "Sua mensagem",
+    "labelImagem": "Url da imagem(opcional)",
+    "titleModal": "Crie o seu recado",
+    "buttonClose": "Fechar",
+    "logo": "Mural de Recados",
+    "home": "Ínicio",
+    "about":"sobre"
+}

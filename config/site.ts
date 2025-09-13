@@ -5,21 +5,25 @@ export const siteConfig = {
   description: 'Deixe seus recados aqui para todos verem!',
   navItems: [
     {
+      labelId:"home",
       label: 'Home',
       href: '/',
     },
     {
-      label: 'Sobre nós',
+      labelId:"about",
+      label: 'Sobre mim',
       href: '/sobre',
     },
   ],
   navMenuItems: [
     {
+      labelId:"home",
       label: 'Home',
       href: '/',
     },
     {
-      label: 'Sobre nós',
+      labelId:"about",
+      label: 'Sobre mim',
       href: '/sobre',
     },
   ],

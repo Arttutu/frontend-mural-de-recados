@@ -15,6 +15,7 @@ import { addToast } from '@heroui/toast';
 import { Plus } from 'lucide-react';
 
 import { createMessage } from '@/app/service/messagemService';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 interface MessageFormData {
   author: string;
@@ -28,7 +29,7 @@ export default function FormMensagem() {
   const [content, setContent] = useState('');
   const [error, setError] = useState('');
   const [image, setImage] = useState('');
-
+  const intl = useIntl()
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -79,36 +80,36 @@ export default function FormMensagem() {
           onOpen();
         }}
       >
-        <Plus /> Criar recado
+        <Plus /> <FormattedMessage defaultMessage={"Criar recado"} id='buttonModal'/>
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
-          <ModalHeader className="flex flex-col gap-1">Crie o seu recado!</ModalHeader>
+          <ModalHeader className="flex flex-col gap-1"><FormattedMessage defaultMessage={"Crie o seu recado"} id='titleModal'/></ModalHeader>
           <ModalBody>
             <Form>
               <Input
                 isRequired
                 isDisabled={mutation.isPending}
-                label="Seu nome"
+                label={intl.formatMessage({defaultMessage:"Seu nome", id:"labelNome"})}
                 name="author"
-                placeholder="Digite o seu nome"
+                placeholder={intl.formatMessage({defaultMessage:"Digite o seu nome", description:"Placeholder do nome", id:"nomePlaceholder"})}
                 type="text"
                 onChange={(e) => setAuthor(e.target.value)}
               />
               <Textarea
                 isRequired
                 isDisabled={mutation.isPending}
-                label="Sua mensagem"
+                  label={intl.formatMessage({defaultMessage:"Sua mensagem", id:"labelMensagem"})}
                 minRows={3}
                 name="content"
-                placeholder="Digite sua mensagem"
+                placeholder={intl.formatMessage({defaultMessage:"Digite sua mensagem", description:"Placeholder da mensagem", id:"mensagemPlaceholder"})}
                 onChange={(e) => setContent(e.target.value)}
               />
               <Input
                 isDisabled={mutation.isPending}
-                label="URL da imagem (opcional)"
+                label={intl.formatMessage({defaultMessage:"Url da imagem(opcional)", id:"labelImagem"})}
                 name="image"
-                placeholder="Link da sua imagem aqui"
+                placeholder={intl.formatMessage({defaultMessage:"Link da sua imagem aqui", description:"Placeholder da imagem", id:"LinkPlaceholder"})}
                 onChange={(e) => setImage(e.target.value)}
               />
               <Button
@@ -118,14 +119,14 @@ export default function FormMensagem() {
                 type="submit"
                 onPress={handleSubmit}
               >
-                Publicar Recado
+                <FormattedMessage defaultMessage={"Publicar recado"} id='buttonPublicar'/>
               </Button>
               {error ? <p className="text-red-500">{error}</p> : ''}
             </Form>
           </ModalBody>
           <ModalFooter>
             <Button color="danger" variant="light" onPress={onOpenChange}>
-              Fechar
+             <FormattedMessage defaultMessage={"Fechar"} id='buttonClose'/>
             </Button>
           </ModalFooter>
         </ModalContent>

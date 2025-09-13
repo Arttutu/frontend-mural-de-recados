@@ -1,3 +1,4 @@
+'use client'
 import {
   Navbar as HeroUINavbar,
   NavbarContent,
@@ -15,15 +16,18 @@ import clsx from 'clsx';
 import { siteConfig } from '@/config/site';
 import { ThemeSwitch } from '@/components/theme-switch';
 import { Logo } from '@/components/icons';
+import LanguageSwitcher from './LanguageSwitcher';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export const Navbar = () => {
+  const intl = useIntl()
   return (
     <HeroUINavbar maxWidth="xl" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
             <Logo />
-            <p className="font-bold text-inherit">Mural de recados</p>
+            <p className="font-bold text-inherit">   <FormattedMessage defaultMessage={"Mural de Recados"}  id="logo"/></p>
           </NextLink>
         </NavbarBrand>
         <ul className="hidden lg:flex gap-4 justify-start ml-2">
@@ -37,24 +41,29 @@ export const Navbar = () => {
                 color="foreground"
                 href={item.href}
               >
-                {item.label}
+             {intl.formatMessage({ id: item.labelId })}
               </NextLink>
             </NavbarItem>
           ))}
         </ul>
       </NavbarContent>
-
+    <div className='flex gap-2 items-center'>   
       <NavbarContent className="hidden sm:flex basis-1/5 sm:basis-full" justify="end">
         <NavbarItem className="hidden sm:flex gap-2">
           <ThemeSwitch />
         </NavbarItem>
       </NavbarContent>
-
+      <NavbarContent className="hidden sm:flex basis-1/5 sm:basis-full" justify="end">
+        <NavbarItem className="hidden sm:flex gap-2">
+          <LanguageSwitcher />
+        </NavbarItem>
+      </NavbarContent>
+      </div>
+   
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
         <ThemeSwitch />
         <NavbarMenuToggle />
       </NavbarContent>
-
       <NavbarMenu>
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navMenuItems.map((item, index) => (
@@ -70,11 +79,15 @@ export const Navbar = () => {
                 href="#"
                 size="lg"
               >
-                {item.label}
+              {intl.formatMessage({ id: item.labelId })}
               </Link>
             </NavbarMenuItem>
           ))}
+            <NavbarItem className="flex sm:hidden gap-2">
+          <LanguageSwitcher />
+        </NavbarItem>
         </div>
+    
       </NavbarMenu>
     </HeroUINavbar>
   );

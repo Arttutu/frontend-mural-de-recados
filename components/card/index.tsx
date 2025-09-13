@@ -23,7 +23,7 @@ export default function CardMensagem() {
           </CardHeader>
 
           <CardBody className="px-4 pb-4 flex flex-col gap-3">
-            <p className=" text-base">{message.content}</p>
+            <p className=" text-base  ">{message.content}</p>
             {message.image && (
               <Image
                 alt="Imagem da mensagem"

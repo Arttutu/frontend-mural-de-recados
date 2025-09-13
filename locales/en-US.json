@@ -1,0 +1,19 @@
+{
+  "mensagemMain": "Leave a positive message to brighten and inspire someone's day",
+  "titleSiteOne": "Message",
+  "titleSiteTwo": "Board",
+  "subtitle": "Community Messages",
+  "buttonModal": "Create Message",
+  "nomePlaceholder": "Enter your name",
+  "mensagemPlaceholder": "Enter your message",
+  "linkPlaceholder": "Your image link here",
+  "buttonPublicar": "Post Message",
+  "labelNome": "Your Name",
+  "labelMensagem": "Your Message",
+  "labelImagem": "Image URL (optional)",
+  "titleModal": "Create Your Message",
+  "buttonClose": "Close",
+  "logo": "Message Board",
+  "home": "Home",
+  "about": "About"
+}
