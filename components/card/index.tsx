@@ -17,7 +17,6 @@ export default function CardMensagem() {
         >
     
           <CardHeader className="flex items-center gap-3 px-4 pt-4">
-       
             <h4 className="font-semibold text-lg">{message.author}</h4>
           </CardHeader>
 

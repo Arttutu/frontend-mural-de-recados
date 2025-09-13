@@ -12,7 +12,7 @@ import { Input, Textarea } from "@heroui/input";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createMessage } from "@/app/service/messagemService";
-
+import {addToast} from "@heroui/toast";
 
 interface MessageFormData{
     author:string;
@@ -25,6 +25,7 @@ export default function FormMensagem() {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [author, setAuthor] = useState('');
   const [content, setContent] = useState('');
+  const [error, setError] = useState('');
   const [image, setImage] = useState('');
 
   const queryClient = useQueryClient();
@@ -33,18 +34,35 @@ export default function FormMensagem() {
    const mutation = useMutation({
      mutationFn: async (newMessage: { author: string; content: string; image?: string }) => {
        const response = await createMessage(newMessage);
-        onOpenChange();
        return response.data;
      },
      onSuccess: () => {
        queryClient.invalidateQueries({ queryKey: ['messages'] });
+       onOpenChange();
+        addToast({
+        title: "Recado publicado!",
+        description: "Seu recado foi enviado com sucesso 🚀",
+        color: "success",
+        timeout: 5000,
+    });
        
      },
+     onError: (err) =>{  
+      addToast({
+      title: "Erro ao publicar",
+      description: `Ops! ${err}`,
+      color: "danger",
+      timeout: 5000,
+    
+    });}
    });
   
     const handleSubmit = () => {    
         const formData: MessageFormData = { author, content, image: image || undefined };
-   
+        if (!author.trim() || !content.trim()) {
+        setError("Preencha seu nome e a mensagem antes de publicar!");
+        return;
+        }
         mutation.mutate(formData);
     };
 
@@ -64,7 +82,7 @@ export default function FormMensagem() {
             <ModalHeader className="flex flex-col gap-1">Crie o seu recado!</ModalHeader>
             <ModalBody>
        
-                <Form onSubmit={handleSubmit}>
+                <Form>
                 <Input
                     label="Seu nome"
                     name="author"
@@ -99,11 +117,12 @@ export default function FormMensagem() {
                 >
                     Publicar Recado
                 </Button>
+                {error ? <p className="text-red-500">{error}</p> :""}
             
                 </Form>
             </ModalBody>
             <ModalFooter>
-            <Button color="danger" variant="light">
+            <Button color="danger" variant="light" onPress={onOpenChange}>
                 Fechar
             </Button>
             </ModalFooter>
