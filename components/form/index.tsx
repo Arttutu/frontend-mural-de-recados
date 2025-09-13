@@ -13,6 +13,7 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createMessage } from "@/app/service/messagemService";
 
+
 interface MessageFormData{
     author:string;
     content: string;
@@ -22,27 +23,28 @@ interface MessageFormData{
 export default function FormMensagem() {
 
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
-  const [isCreating, setIsCreating] = useState(false);
   const [author, setAuthor] = useState('');
   const [content, setContent] = useState('');
   const [image, setImage] = useState('');
 
   const queryClient = useQueryClient();
 
-  
+
    const mutation = useMutation({
      mutationFn: async (newMessage: { author: string; content: string; image?: string }) => {
        const response = await createMessage(newMessage);
+        onOpenChange();
        return response.data;
      },
      onSuccess: () => {
        queryClient.invalidateQueries({ queryKey: ['messages'] });
-       setIsCreating(false);
+       
      },
    });
-   
+  
     const handleSubmit = () => {    
         const formData: MessageFormData = { author, content, image: image || undefined };
+   
         mutation.mutate(formData);
     };
 
@@ -53,7 +55,7 @@ export default function FormMensagem() {
             variant="shadow" 
             color="primary"
             className="text-xl w-auto mb-8" 
-            onPress={() => { setIsCreating(true); onOpen(); }}
+            onPress={() => { onOpen(); }}
         >
             Criar recado
         </Button>
@@ -61,7 +63,7 @@ export default function FormMensagem() {
         <ModalContent>
             <ModalHeader className="flex flex-col gap-1">Crie o seu recado!</ModalHeader>
             <ModalBody>
-            {isCreating && (
+       
                 <Form onSubmit={handleSubmit}>
                 <Input
                     label="Seu nome"
@@ -99,10 +101,9 @@ export default function FormMensagem() {
                 </Button>
             
                 </Form>
-            )}
             </ModalBody>
             <ModalFooter>
-            <Button color="danger" variant="light" onPress={onOpenChange}>
+            <Button color="danger" variant="light">
                 Fechar
             </Button>
             </ModalFooter>

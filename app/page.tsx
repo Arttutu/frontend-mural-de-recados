@@ -7,12 +7,8 @@ import FormMensagem from '@/components/form';
 
 
 export default function Home() {
-
-
-
-
   return (
-    <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10 max-w-4xl mx-auto px-4">
+    <section className="flex flex-col items-center justify-center gap-4 py-8 mx-auto md:py-10 px-4">
       <div className="flex flex-col items-center text-center gap-2">
         <div className="flex items-center justify-center gap-2">    
           <span className={title()}>Mural de </span>
