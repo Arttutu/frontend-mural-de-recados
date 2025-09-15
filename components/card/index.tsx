@@ -2,7 +2,7 @@ import { Card, CardHeader, CardBody } from '@heroui/card';
 import { Image } from '@heroui/image';
 
 import SkeletoCard from '../Skeleton';
-
+import {ScrollShadow} from "@heroui/scroll-shadow";
 import { useMessagens } from '@/app/hook/useMessagens';
 import { MessageCircle } from 'lucide-react';
 
@@ -24,8 +24,9 @@ export default function CardMensagem() {
           </CardHeader>
 
           <CardBody className="px-4 pb-4 flex flex-col gap-3 min-h-[280px]">
-            <p className="text-base line-clamp-3">{message.content}</p>
-
+            <ScrollShadow className=" h-[120px]">
+              <p className="text-md max-h-[200px]">{message.content}</p>
+            </ScrollShadow>
             <div className="mt-auto">
               {message.image ? (
                 <Image
