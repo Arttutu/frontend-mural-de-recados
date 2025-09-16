@@ -50,15 +50,15 @@ export default function FormMensagem() {
       setError('');
 
       addToast({
-        title: 'Recado publicado!',
-        description: 'Seu recado foi enviado com sucesso 🚀',
+        title: `${intl.formatMessage({ defaultMessage: 'Recado pubilicado', id: 'recadoSucess' })}`,
+        description: `${intl.formatMessage({ defaultMessage: 'Seu recado foi enviado com sucesso 🚀', id: 'descriptionSucess' })}`,
         color: 'success',
         timeout: 5000,
       });
     },
     onError: (err) => {
       addToast({
-        title: 'Erro ao publicar',
+        title: `${intl.formatMessage({ defaultMessage: 'Erro ao publicar', id: 'reacadoError' })}`,
         description: `Ops! ${err.message}`,
         color: 'danger',
         timeout: 5000,
@@ -71,13 +71,17 @@ export default function FormMensagem() {
     if (file) {
       // Verificar se é uma imagem
       if (!file.type.startsWith('image/')) {
-        setError('Por favor, selecione apenas arquivos de imagem');
+        setError(
+          `${intl.formatMessage({ defaultMessage: 'Por favor, selecione apenas arquivos de imagem', id: 'erroFile' })}`
+        );
         return;
       }
 
       // Verificar tamanho do arquivo (max 5MB)
       if (file.size > 5 * 1024 * 1024) {
-        setError('A imagem deve ter no máximo 5MB');
+        setError(
+          `${intl.formatMessage({ defaultMessage: 'A imagem deve ter no máximo 5MB!', id: 'erroSize' })}`
+        );
         return;
       }
 
@@ -95,7 +99,9 @@ export default function FormMensagem() {
 
   const handleSubmit = () => {
     if (!author.trim() || !content.trim()) {
-      setError('Preencha seu nome e a mensagem antes de publicar!');
+      setError(
+        `${intl.formatMessage({ defaultMessage: 'Preencha seu nome e a mensagem antes de publicar!', id: 'erroForm' })}`
+      );
       return;
     }
 
@@ -195,7 +201,7 @@ export default function FormMensagem() {
                     variant="bordered"
                     onPress={() => fileInputRef.current?.click()}
                     startContent={<Upload size={16} />}
-                    className="w-full"
+                    className="w-full mt-2"
                   >
                     <FormattedMessage defaultMessage="Selecionar imagem" id="buttonSelectFile" />
                   </Button>
@@ -220,7 +226,7 @@ export default function FormMensagem() {
                     <img
                       src={imagePreview}
                       alt="Preview"
-                      className="w-32 h-32 object-cover rounded-lg border"
+                      className="w-42 h-auto  rounded-lg border"
                     />
                     <Button
                       size="sm"
@@ -228,7 +234,7 @@ export default function FormMensagem() {
                       color="danger"
                       variant="flat"
                       onPress={removeImage}
-                      className="absolute -top-2 -right-2 min-w-6 h-6"
+                      className="absolute top-2 right-2 min-w-6 h-6"
                     >
                       <X size={14} />
                     </Button>

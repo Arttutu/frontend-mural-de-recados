@@ -15,5 +15,13 @@
   "buttonClose": "Fechar",
   "logo": "Mural de Recados",
   "home": "Ínicio",
-  "about": "sobre"
+  "about": "sobre",
+  "recadoSucess": "Recado publicado!",
+  "reacadoError": "Erro ao publicar!",
+  "descriptionSucess": "Seu recado foi enviado com sucesso 🚀",
+  "erroForm": "Preencha seu nome e a mensagem antes de publicar!",
+  "erroSize": "A imagem deve ter no máximo 5MB!",
+  "erroFile": "Por favor, selecione apenas arquivos de imagem",
+  "fileInstructions": "Formatos suportados: JPG, PNG, GIF. Máximo: 5MB",
+  "buttonSelectFile": "Selecionar imagem"
 }
