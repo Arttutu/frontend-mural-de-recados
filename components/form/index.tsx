@@ -9,10 +9,10 @@ import {
 } from '@heroui/modal';
 import { Form } from '@heroui/form';
 import { Input, Textarea } from '@heroui/input';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addToast } from '@heroui/toast';
-import { Plus } from 'lucide-react';
+import { Plus, Upload, X } from 'lucide-react';
 
 import { createMessage } from '@/app/service/messagemService';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -20,7 +20,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 interface MessageFormData {
   author: string;
   content: string;
-  image?: string;
+  image?: File;
 }
 
 export default function FormMensagem() {
@@ -28,19 +28,27 @@ export default function FormMensagem() {
   const [author, setAuthor] = useState('');
   const [content, setContent] = useState('');
   const [error, setError] = useState('');
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string>('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const intl = useIntl();
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async (newMessage: { author: string; content: string; image?: string }) => {
+    mutationFn: async (newMessage: { author: string; content: string; image?: File }) => {
       const response = await createMessage(newMessage);
-
       return response.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['messages'] });
       onOpenChange();
+      // Reset form
+      setAuthor('');
+      setContent('');
+      setImage(null);
+      setImagePreview('');
+      setError('');
+
       addToast({
         title: 'Recado publicado!',
         description: 'Seu recado foi enviado com sucesso 🚀',
@@ -51,38 +59,87 @@ export default function FormMensagem() {
     onError: (err) => {
       addToast({
         title: 'Erro ao publicar',
-        description: `Ops! ${err}`,
+        description: `Ops! ${err.message}`,
         color: 'danger',
         timeout: 5000,
       });
     },
   });
 
-  const handleSubmit = () => {
-    const formData: MessageFormData = { author, content, image: image || undefined };
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Verificar se é uma imagem
+      if (!file.type.startsWith('image/')) {
+        setError('Por favor, selecione apenas arquivos de imagem');
+        return;
+      }
 
+      // Verificar tamanho do arquivo (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        setError('A imagem deve ter no máximo 5MB');
+        return;
+      }
+
+      setImage(file);
+      setError('');
+
+      // Criar preview da imagem
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImagePreview(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSubmit = () => {
     if (!author.trim() || !content.trim()) {
       setError('Preencha seu nome e a mensagem antes de publicar!');
-
       return;
     }
+
+    const formData: MessageFormData = {
+      author: author.trim(),
+      content: content.trim(),
+      image: image || undefined,
+    };
+
     mutation.mutate(formData);
+  };
+
+  const removeImage = () => {
+    setImage(null);
+    setImagePreview('');
+    setError('');
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  const handleCloseModal = () => {
+    // Resetar tudo ao fechar o modal
+    setAuthor('');
+    setContent('');
+    setImage(null);
+    setImagePreview('');
+    setError('');
+    onOpenChange();
   };
 
   return (
     <>
       <Button
-        className="text-xl w-auto my-6  "
+        className="text-xl w-auto my-6"
         color="primary"
         size="lg"
         variant="shadow"
-        onPress={() => {
-          onOpen();
-        }}
+        onPress={onOpen}
       >
         <Plus /> <FormattedMessage defaultMessage={'Criar recado'} id="buttonModal" />
       </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+
+      <Modal isOpen={isOpen} onOpenChange={handleCloseModal}>
         <ModalContent>
           <ModalHeader className="flex flex-col gap-1">
             <FormattedMessage defaultMessage={'Crie o seu recado'} id="titleModal" />
@@ -100,8 +157,13 @@ export default function FormMensagem() {
                   id: 'nomePlaceholder',
                 })}
                 type="text"
-                onChange={(e) => setAuthor(e.target.value)}
+                value={author}
+                onChange={(e) => {
+                  setAuthor(e.target.value);
+                  setError('');
+                }}
               />
+
               <Textarea
                 isRequired
                 isDisabled={mutation.isPending}
@@ -113,36 +175,81 @@ export default function FormMensagem() {
                   description: 'Placeholder da mensagem',
                   id: 'mensagemPlaceholder',
                 })}
-                onChange={(e) => setContent(e.target.value)}
+                value={content}
+                onChange={(e) => {
+                  setContent(e.target.value);
+                  setError('');
+                }}
               />
-              <Input
-                isDisabled={mutation.isPending}
-                label={intl.formatMessage({
-                  defaultMessage: 'Url da imagem(opcional)',
-                  id: 'labelImagem',
-                })}
-                name="image"
-                placeholder={intl.formatMessage({
-                  defaultMessage: 'Link da sua imagem aqui',
-                  description: 'Placeholder da imagem',
-                  id: 'LinkPlaceholder',
-                })}
-                onChange={(e) => setImage(e.target.value)}
-              />
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium">
+                  {intl.formatMessage({
+                    defaultMessage: 'Imagem (opcional)',
+                    id: 'labelImagem',
+                  })}
+                </label>
+                <div className="flex flex-col gap-2">
+                  <Button
+                    size="sm"
+                    variant="bordered"
+                    onPress={() => fileInputRef.current?.click()}
+                    startContent={<Upload size={16} />}
+                    className="w-full"
+                  >
+                    <FormattedMessage defaultMessage="Selecionar imagem" id="buttonSelectFile" />
+                  </Button>
+
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleImageChange}
+                  />
+
+                  <p className="text-xs text-gray-500">
+                    <FormattedMessage
+                      defaultMessage="Formatos suportados: JPG, PNG, GIF. Máximo: 5MB"
+                      id="fileInstructions"
+                    />
+                  </p>
+                </div>
+                {imagePreview && (
+                  <div className="mt-2 relative">
+                    <img
+                      src={imagePreview}
+                      alt="Preview"
+                      className="w-32 h-32 object-cover rounded-lg border"
+                    />
+                    <Button
+                      size="sm"
+                      isIconOnly
+                      color="danger"
+                      variant="flat"
+                      onPress={removeImage}
+                      className="absolute -top-2 -right-2 min-w-6 h-6"
+                    >
+                      <X size={14} />
+                    </Button>
+                  </div>
+                )}
+              </div>
+
               <Button
-                className="w-full"
+                className="w-full mt-4"
                 color="primary"
                 isLoading={mutation.isPending}
-                type="submit"
                 onPress={handleSubmit}
               >
                 <FormattedMessage defaultMessage={'Publicar recado'} id="buttonPublicar" />
               </Button>
-              {error ? <p className="text-red-500">{error}</p> : ''}
+
+              {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
             </Form>
           </ModalBody>
           <ModalFooter>
-            <Button color="danger" variant="light" onPress={onOpenChange}>
+            <Button color="danger" variant="light" onPress={handleCloseModal}>
               <FormattedMessage defaultMessage={'Fechar'} id="buttonClose" />
             </Button>
           </ModalFooter>
