@@ -9,22 +9,12 @@ export const siteConfig = {
       label: 'Home',
       href: '/',
     },
-    {
-      labelId: 'about',
-      label: 'Sobre mim',
-      href: '/sobre',
-    },
   ],
   navMenuItems: [
     {
       labelId: 'home',
       label: 'Home',
       href: '/',
-    },
-    {
-      labelId: 'about',
-      label: 'Sobre mim',
-      href: '/sobre',
     },
   ],
 };

@@ -1,53 +1,48 @@
-# Next.js & HeroUI Template
+# Mural de recados
 
-This is a template for creating applications using Next.js 14 (app directory) and HeroUI (v2).
+## Descrição
 
-[Try it on CodeSandbox](https://githubbox.com/heroui-inc/heroui/next-app-template)
+O projeto mural de recados é um sistema web que permite que o usuários criem recados anexando imagens e a cada 10 minutos os recados são apagados automaticamente.O mural de recados frontend foi construido utilizando Next.js, HeroUI, Tailiwind CSS, React Query, Docker, Axios e React Intl. O projeto é desafio proposto pela empresa Geraup para a vaga Desenvolvedor Fullstack.
 
-## Technologies Used
+## Tecnologias
 
-- [Next.js 14](https://nextjs.org/docs/getting-started)
-- [HeroUI v2](https://heroui.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [next-themes](https://github.com/pacocoursey/next-themes)
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)![React Query](https://img.shields.io/badge/React_Query-FF4154?style=for-the-badge&logo=reactquery&logoColor=white)![Axios](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white)![React Intl](https://img.shields.io/badge/React_Intl-262e3f?style=for-the-badge)
+![HeroUI](https://img.shields.io/badge/HeroUI-7928CA?style=for-the-badge)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
-## How to Use
+## Instruções de Instalação
 
-### Use the template with create-next-app
+### Pré requesitos
 
-To create a new project based on this template using `create-next-app`, run the following command:
+- Docker
+- Git
 
-```bash
-npx create-next-app -e https://github.com/heroui-inc/next-app-template
-```
+### Etapas
 
-### Install dependencies
-
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
+Clonar o projeto
 
 ```bash
-npm install
+    git clone https://github.com/Arttutu/frontend-mural-de-recados.git
+    cd frontend-mural-de recados
 ```
 
-### Run the development server
+Utilizar o docker
 
 ```bash
-npm run dev
+  docker build -t mural-frontend .
+  docker run -p 3000:3000 mural-frontend
 ```
 
-### Setup pnpm (optional)
+## Como utilizar
 
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
+Acesse localmente na porta 3000
 
-```bash
-public-hoist-pattern[]=*@heroui/*
-```
+- http://localhost:3000/
 
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
+Acesse o github do backend da aplicação e siga as intruções para rodar o backend
 
-## License
+- https://github.com/Arttutu/backend-mural-de-reacados
 
-Licensed under the [MIT license](https://github.com/heroui-inc/next-app-template/blob/main/LICENSE).
+Pronto! depois desse passo é só criar seus recados!
+
+![Projeto](https://github.com/Arttutu/frontend-mural-de-recados/blob/main/image.png?raw=true)
