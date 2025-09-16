@@ -6,16 +6,15 @@ O projeto mural de recados é um sistema web que permite que o usuários criem r
 
 ## Tecnologias
 
-![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)![React Query](https://img.shields.io/badge/React_Query-FF4154?style=for-the-badge&logo=reactquery&logoColor=white)![Axios](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white)![React Intl](https://img.shields.io/badge/React_Intl-262e3f?style=for-the-badge)
-![HeroUI](https://img.shields.io/badge/HeroUI-7928CA?style=for-the-badge)
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)![React Query](https://img.shields.io/badge/React_Query-FF4154?style=for-the-badge&logo=reactquery&logoColor=white)![Axios](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white)![React Intl](https://img.shields.io/badge/React_Intl-262e3f?style=for-the-badge)
+![HeroUI](https://img.shields.io/badge/HeroUI-7928CA?style=for-the-badge)![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
 ## Instruções de Instalação
 
 ### Pré requesitos
 
-- Docker
-- Git
+- [Docker](https://www.docker.com/)
+- [Git](https://git-scm.com/downloads)
 
 ### Etapas
 
