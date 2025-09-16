@@ -24,11 +24,10 @@ export default function CardMensagem() {
           </CardHeader>
 
           <CardBody className="px-4 pb-4 flex flex-col gap-3 min-h-[280px]">
-            <ScrollShadow className=" h-[120px]">
+            <ScrollShadow className=" max-h-[120px]">
               <p className="text-md max-h-[200px]">{message.content}</p>
             </ScrollShadow>
             <div className="mt-auto">
-              {message.image}
               {message.image ? (
                 <Image
                   alt="Imagem da mensagem"
