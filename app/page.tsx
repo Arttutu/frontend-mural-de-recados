@@ -1,4 +1,3 @@
-// pages/index.tsx
 'use client';
 import { FormattedMessage } from 'react-intl';
 
@@ -30,8 +29,14 @@ export default function Home() {
       <FormMensagem />
       <div className="flex flex-col ">
         <span className={subtitle({ class: 'my-6 text-2xl text-left' })}>
-          <FormattedMessage defaultMessage={'Recados da comunidade'} id="subtitle" />
+          <FormattedMessage
+            defaultMessage={
+              'Últimos recados da comunidade - As mensagens serão apagadas a cada 10 minutos.'
+            }
+            id="subtitle"
+          />
         </span>
+
         <CardMensagem />
       </div>
     </section>

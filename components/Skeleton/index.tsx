@@ -3,7 +3,7 @@ import { Skeleton } from '@heroui/skeleton';
 
 export default function SKeletonCard() {
   return (
-    <div className="flex flex-row gap-6 justify-start  p-4">
+    <div className="flex flex-wrap flex-row gap-6 justify-start  p-4">
       <Card className="w-[380px] h-[300px]  rounded-2xl  space-y-5 p-4" radius="lg">
         <div className="space-y-3">
           <Skeleton className="w-3/5 rounded-lg">
@@ -52,7 +52,7 @@ export default function SKeletonCard() {
           <div className="h-24 rounded-lg bg-default-300" />
         </Skeleton>
       </Card>
-         <Card className="w-[380px] h-[300px] rounded-2xl  space-y-5 p-4" radius="lg">
+      <Card className="w-[380px] h-[300px] rounded-2xl  space-y-5 p-4" radius="lg">
         <div className="space-y-3">
           <Skeleton className="w-3/5 rounded-lg">
             <div className="h-3 w-3/5 rounded-lg bg-default-200" />
